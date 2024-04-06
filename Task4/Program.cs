@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,29 +11,25 @@ namespace Task4
     {
         static void Main()
         {
-            Console.WriteLine("Укажите путь к бинарному файлу");
-            string path = Console.ReadLine();
-            if(File.Exists(path))
+            List<Student> students = ReadStudentsFromBinFile("students.dat");
+            foreach(Student student in students)
             {
-                List<Student> students = ReadStudentsFromBinFile(path);
-                foreach(Student student in students)
-                {
-                    Console.WriteLine(/*...*/);
-                }
+                Console.WriteLine(/*...*/);
             }
         }
 
-        static List<Student> ReadStudentsFromBinFile(string fileName)
+        static List<Student> ReadStudentsFromBinFilen(string fileName)
         {
             List<Student> students = new List<Student>();
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            using ( var fs = new FileStream(fileName, FileMode.Open))
+            using FileStream fs = new FileStream(fileName,FileMode.Open);
+            using StreamReader sr = new StreamReader(fs);
+            Console.WriteLine(sr.ReadToEnd());
+            fs.Position = 0;
+            BinaryReader binaryReader = new BinaryReader(fs);
+            while (fs.Position < fs.Length)
             {
-                // Как вытащить список объектов из файла и добавить в students??
-                var obj = binaryFormatter.Deserialize(fs);
                 
             }
-            return students;
         }
     }
 }
