@@ -6,19 +6,12 @@ using System.Threading.Tasks;
 
 namespace Task4
 {
-    internal class Student
+    public class Student
     {
-        public string Name { get; }
-        public string Group { get; }
-        public DateTime DateOfBirth { get; }
-        public decimal AverageScore { get; }
+        public string Name { get; set; }
+        public string Group { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public decimal AverageScore { get; set; }
 
-        public Student(string name, string group, DateTime dateofbirth, decimal averageScore)
-        {
-            Name = name;
-            Group = group;
-            DateOfBirth = dateofbirth;
-            AverageScore = averageScore;
-        }
     }
 }

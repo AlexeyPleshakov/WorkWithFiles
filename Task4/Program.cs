@@ -11,25 +11,31 @@ namespace Task4
     {
         static void Main()
         {
-            List<Student> students = ReadStudentsFromBinFile("students.dat");
-            foreach(Student student in students)
-            {
-                Console.WriteLine(/*...*/);
-            }
+            Console.WriteLine("Укажите путь к бинарному файлу");
+            string filePath = Console.ReadLine();
+            List<Student> students = ReadStudentsFromBinFile(filePath);
+            Directory.CreateDirectory("C:/Users/plesh/OneDrive/Студенты");
+            
         }
 
-        static List<Student> ReadStudentsFromBinFilen(string fileName)
+        static List<Student> ReadStudentsFromBinFile(string filePath)
         {
             List<Student> students = new List<Student>();
-            using FileStream fs = new FileStream(fileName,FileMode.Open);
-            using StreamReader sr = new StreamReader(fs);
-            Console.WriteLine(sr.ReadToEnd());
-            fs.Position = 0;
-            BinaryReader binaryReader = new BinaryReader(fs);
-            while (fs.Position < fs.Length)
+            using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
             {
-                
+                while(reader.BaseStream.Position < reader.BaseStream.Length)
+                {
+                    var student = new Student()
+                    {
+                        Name = reader.ReadString(),
+                        Group = reader.ReadString(),
+                        DateOfBirth = DateTime.FromBinary(reader.ReadInt64()),
+                        AverageScore = reader.ReadDecimal()
+                    };
+                    students.Add(student);
+                }
             }
+            return students;
         }
     }
 }
