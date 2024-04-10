@@ -14,8 +14,27 @@ namespace Task4
             Console.WriteLine("Укажите путь к бинарному файлу");
             string filePath = Console.ReadLine();
             List<Student> students = ReadStudentsFromBinFile(filePath);
-            Directory.CreateDirectory("C:/Users/plesh/OneDrive/Студенты");
-            
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string outputDirectoryPath = Path.Combine(desktopPath, "Students");
+            if (!Directory.Exists(outputDirectoryPath))
+            {
+                Directory.CreateDirectory(outputDirectoryPath);
+            }
+            foreach(var student in students)
+            {
+                string groupFilePath = Path.Combine(outputDirectoryPath, $"{student.Group}.txt");
+                using(StreamWriter writer = new StreamWriter(groupFilePath, true))
+                {
+                    foreach(var s in students)
+                    {
+                        if(s.Group == student.Group)
+                        {
+                            writer.WriteLine($"{s.Name}, {s.DateOfBirth}, {s.AverageScore}");
+                        }
+                    }
+                }
+            }
+            Console.WriteLine("Работа программы завершена, проверьте рабочий стол");
         }
 
         static List<Student> ReadStudentsFromBinFile(string filePath)
