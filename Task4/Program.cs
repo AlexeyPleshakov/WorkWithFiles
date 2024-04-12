@@ -9,10 +9,10 @@ namespace Task4
 {
     internal class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
             Console.WriteLine("Укажите путь к бинарному файлу");
-            string filePath = Console.ReadLine();
+            string filePath = args[0];
             List<Student> students = ReadStudentsFromBinFile(filePath);
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string outputDirectoryPath = Path.Combine(desktopPath, "Students");
